@@ -271,6 +271,7 @@ public:
                 default: traduccion = "Idioma no valido"; break;
                 }
                 cout << "\n Traduccion encontrada: " << traduccion << endl;
+                hablar(traduccion);
             }
             else
             {
@@ -288,6 +289,14 @@ public:
                 cout << "\n Palabra no encontrada\n";
             }
         }
+    }
+
+    // Función para hablar (síntesis de voz usando PowerShell)
+    void hablar(const string& texto) {
+        string comando = "powershell -Command \"Add-Type –AssemblyName System.Speech; "
+            "$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer; "
+            "$speak.Speak(\\\"" + texto + "\\\");\"";
+        system(comando.c_str());
     }
 
     bool eliminarPalabra(const string& palabra)
@@ -583,6 +592,7 @@ void MenuSesion() {
     //delete usuarioActivo;
     
 }
+
 
 int main()
 {
