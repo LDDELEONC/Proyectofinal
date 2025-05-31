@@ -399,10 +399,6 @@ void iniciarSesion() {
 
     archivo.close();
 
-    /*if (!encontrado) {        
-        std::cout << "USUARIO O CLAVE INCORRECTOS.\n";
-        return;
-    }*/
 }
 
 void saveFileEncodeUser() {
@@ -607,7 +603,7 @@ void MenuSesion() {
 int main()
 {
     MenuSesion();
-    if (usuarioActivo) {
+    if (usuarioActivo && sesion) {
         system("cls");        
         MenuArchivos();
     }
