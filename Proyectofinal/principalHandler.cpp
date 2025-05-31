@@ -10,6 +10,7 @@
 
 using namespace std;
 Usuario* usuarioActivo = nullptr;
+bool sesion = false;
 struct Nodo
 {
     string espanol, italiano, frances, aleman, ingles;
@@ -391,15 +392,17 @@ void iniciarSesion() {
             usuarioActivo = new Usuario(nombre, clave);
             std::cout << "SESION INICIADA COMO : '" << nombre << "'\n";
             encontrado = true;
+            sesion = true;
             break;
         }
     }
 
     archivo.close();
 
-    if (!encontrado) {
+    /*if (!encontrado) {        
         std::cout << "USUARIO O CLAVE INCORRECTOS.\n";
-    }
+        return;
+    }*/
 }
 
 void saveFileEncodeUser() {
@@ -449,12 +452,18 @@ void mostrarMenu()
 void MenuArchivos() {    
     ArbolTraducciones arbol;
     cout << " ---------------------------    Sistema de traducciones Iniciado ------------------------------------------ \n";
-    std::cout << " SESION INICIADA COMO : '" << usuarioActivo->nombre << "'\n";
+    
 
-    if(!usuarioActivo)
-        leerArchivo("Traducciones.txt", arbol);
-    else
+    if (usuarioActivo) {
+        std::cout << " SESION INICIADA COMO : '" << usuarioActivo->nombre << "'\n";
         leerArchivo(usuarioActivo->nombre + ".txt", arbol);
+        
+    }
+    else {
+        std::cout << " INGRESO SIN SESION \n";
+        leerArchivo("Traducciones.txt", arbol);
+        
+    }
 
     int opcion;
     do
@@ -574,7 +583,7 @@ void MenuSesion() {
         std::cout << "\n=========== MENU PRINCIPAL ===========\n";
         std::cout << "1. CREAR USUARIO\n";
         std::cout << "2. INICIAR SESION\n";
-        std::cout << "3. CREAR ARCHIVO PROTEGIDO\n";
+        std::cout << "3. INICIAR SIN SESION\n";
         std::cout << "0. SALIR\n";
         std::cout << "SELECCIONE UNA OPCION: ";
         std::cin >> opcion;
@@ -583,7 +592,8 @@ void MenuSesion() {
         switch (opcion) {
         case 1: crearUsuario(); break;
         case 2: iniciarSesion();  return; break;
-        case 3: crearArchivo(); break;
+        //case 3: crearArchivo(); break;
+        case 3: sesion = true; return;
         //case 0: std::cout << "SALIENDO......\n"; break;
         default: std::cout << "OPCION INVALIDA.\n"; break;
         }
@@ -600,6 +610,15 @@ int main()
     if (usuarioActivo) {
         system("cls");        
         MenuArchivos();
+    }
+    else {
+        if (sesion) {
+            system("cls");
+            MenuArchivos();
+        }
+        else {
+            std::cout << "USUARIO O CLAVE INCORRECTOS.\n";            
+        }
     }
     return 0;
 }

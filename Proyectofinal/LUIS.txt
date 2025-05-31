@@ -1,2 +1,0 @@
-amigo,ami,me,frunch,friend
-libro,libro,livre,buch,book
