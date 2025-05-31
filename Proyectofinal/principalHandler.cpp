@@ -404,7 +404,7 @@ void iniciarSesion() {
 void saveFileEncodeUser() {
     std::ifstream archivo( usuarioActivo->nombre + ".txt");
     std::ofstream archivoUsuarioEncode(usuarioActivo->nombre + "_Encode.txt", std::ios::app);
-    std::string linea;    
+    std::string linea;  
 
     while (std::getline(archivo, linea)) {
         archivoUsuarioEncode << Encode(linea) << "\n";        
